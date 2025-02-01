@@ -1,0 +1,31 @@
+spark_conf: &common_spark_conf
+  spark.sql.sources.commitProtocolClass: "org.apache.spark.sql.execution.datasources.SQLHadoopMapReduceCommitProtocol"
+  parquet.enable.summary-metadata: false
+  mapreduce.fileoutputcommitter.marksuccessfuljobs: false
+
+dag:
+  dag_id: "bounce_rate_ga_input_metrics_tech"
+  schedule_interval: 50 10 * * *
+  description: "Essa tabela possúi resultados já agrupados do Google Analytics. Nessa tabela, temos: data do evento, categoria do dispositivo, quantidade de sessões, quantidade de pageviews, quantidade de novos visitantes, quantidade de antigos visitantes, quantidade de visitantes únicos, quantidades de bounces, quantidade de soft bounces, quantidade de transação. V1.0"
+  default_args:
+    owner: "felipe.ferreira@mm.com.br"
+    start_date: "2023-01-01 01:00:00"
+    retries: 0
+  tags:
+    - "input metrics tech"
+    - "bounce rate"
+    - "databricks"  
+
+tasks:
+  bounce_rate_ga:
+    operator: "databricks"
+    file: "bounce_rate_ga.py"
+    node_type: "multi_node"
+    cluster: "m5.large"
+    spark_conf: *common_spark_conf
+    libraries:
+      pypi:
+        - "requests"
+
+
+execution: "bounce_rate_ga"

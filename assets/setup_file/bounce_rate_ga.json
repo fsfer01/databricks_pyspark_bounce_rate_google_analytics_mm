@@ -1,0 +1,116 @@
+{
+    "schema": "censurado",
+    "table": "bounce_rate_ga",
+    "table_description": "Essa tabela possui resultados já agrupados do Google Analytics. Nessa tabela, temos: data do evento, categoria do dispositivo, quantidade de sessões, quantidade de pageviews, quantidade de novos visitantes, quantidade de antigos visitantes, quantidade de visitantes únicos, quantidades de bounces, quantidade de soft bounces, quantidade de transação.",
+    "operator": "operator_dbs",
+    "api": null,
+    "bu": "bu_censurado",
+    "source": ["s3://censurado/gcp_extraction/analytics_outbound"], 
+    "column_types": {
+        "pk_data_evento": {
+            "column_type": "string",
+            "max_length": "10",
+            "description": "As informações dessa coluna indicam a data em que ocorreram os eventos no Google Analytics. A data está no formato YYYY-MM-DD. Esta coluna não deve conter valores nulos.",
+            "is_metric": false,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "pk_categoria_dispositivo": {
+            "column_type": "string",
+            "max_length": "10",
+            "description": "As informações dessa coluna indicam a categoria do dispositivo que acessou o site ou app da MadeiraMadeira. Essa coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_sessoes": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de sessões geradas por cada categoria de dispositivo que acessou o site ou aplicativo da MadeiraMadeira. Sessão é a quantidade de vezes que um usuário interagiu com o site em um período de até 30 minutos sem ficar inativo. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_pageviews": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de visualizações de página (pageviews) geradas por cada categoria de dispositivo que acessou o site ou aplicativo da MadeiraMadeira. Visualização de página é o número total de páginas visualizadas. As visualizações repetidas de uma única página são contadas. De acordo com o site de suporte do Google Analytics, uma visualização de página é uma instância de uma página sendo carregada ou recarregada por um navegador. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_visitantes_unicos": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de visitantes únicos que acessaram o site ou aplicativo da MadeiraMadeira. Esta quantidade é mensurada através de uma contagem distinta do ClientID, que é um código gerado aleatoriamente pelo Google Analytics e atribuído ao cookie de visita do usuário, representando assim um navegador ou dispositivo. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_novos_visitantes": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de novos visitantes que acessaram o site ou aplicativo da MadeiraMadeira. Esta quantidade é medida através de uma contagem distinta do ClientID considerando a flag totals.newVisits = 1. Quando ocorre a primeira visita do ClientID, a flag totals.newVisits recebe o valor 1, caso contrário é nula. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_antigos_visitantes": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de antigos visitantes que acessaram o site ou aplicativo da MadeiraMadeira. Esta quantidade é medida através de uma contagem distinta do ClientID considerando a flag totals.newVisits = null. Quando não ocorre a primeira visita do ClientID, a flag totals.newVisits é nula. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_bounces": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de bounces registrados ao acessaram o site ou aplicativo da MadeiraMadeira. Esta quantidade é medida através de uma contagem distinta de sessões considerando a flag totals.bounces = 1. Quando o visitante interage com o site ou app, a flag totals.bounces é nula. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_soft_bounces": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "As informações dessa coluna indicam a quantidade de soft bounces registrados ao acessaram o site ou aplicativo da MadeiraMadeira. Esta quantidade é medida através de uma contagem distinta de sessões considerando a flag totals.pageviews = 1. Quando o visitante acessa mais de uma página, a flag totals.pageviews é diferente de 1. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "quantidade_transacoes": {
+            "column_type": "int",
+            "max_length": "None",
+            "description": "Segundo documentação ofical, transações são o total de transações de comércio eletrônico na sessão. Esse evento depende da configuração feita através do Google Analytics. Para mais observações, é necessário acionar equipe responsável pelo GA. Esta coluna não deve conter valores nulos.",
+            "is_metric": true,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        },
+        "data_processamento": {
+            "column_type": "string",
+            "max_length": "20",
+            "description": "Data em que foram processados os dados. Referente à data em que a DAG rodou pela última vez, no formato YYYY-MM-DD HH:MM:SS.",
+            "is_metric": false,
+            "is_nullable": false,
+            "pii_confidentiality_impact_level": null,
+            "fk_source": null
+        }
+
+    },
+    "table_id": [
+        "pk_data_evento",
+        "pk_categoria_dispositivo"    
+    ],
+    "sgbd": "custom"
+}   
